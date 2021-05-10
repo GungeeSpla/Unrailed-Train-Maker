@@ -188,7 +188,7 @@
 			en: 'Show only the highest level wagons.',
 		},
 	};
-	const IS_TOUCH_DEVICE  = window.ontouchstart !== undefined;
+	const IS_TOUCH_DEVICE  = ('ontouchstart' in window || navigator.msPointerEnabled) ? true : false;
 	const EVENT_CLICK      = IS_TOUCH_DEVICE ? 'touchstart' : 'click';
 	const QUERIES = get_queries();
 	const QUERY_LANG_KEY = QUERIES.lang;
@@ -856,7 +856,6 @@
 	 */
 	function onload() {
 		document.body.style.setProperty('background-image', 'url(./assets/img/header/1.jpg)');
-		alert(('ontouchstart' in window || navigator.msPointerEnabled) ? true : false);
 	}
 
 	/** window.addEventListener
