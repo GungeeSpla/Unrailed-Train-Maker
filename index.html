@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Unrailed! Train Maker</title>
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@GungeeSpla" />
+		<meta name="twitter:title" content="Unrailed! Train Maker" />
+		<meta name="twitter:description" content="Unrailed! Train Makerは、ゲーム『Unrailed!』の列車の画像を作成してそれをダウンロードすることができる非公式のツールです。" />
+		<meta name="twitter:image" content="https://gungeespla.github.io/Unrailed-Train-Maker/assets/img/favicon.png" />
+		<script src="./assets/js/main.js"></script>
+		<link href="./assets/css/reset.css" rel="stylesheet">
+		<link href="./assets/css/checkbox.css" rel="stylesheet">
+		<link href="./assets/css/style.css" rel="stylesheet">
+		<link rel="icon" type="image/png" href="./assets/img/favicon.png">
+	</head>
+	<body>
+		<h2 trans-key="title">Unrailed! 列車メーカー</h2>
+		<div id="content">
+			<h3 trans-key="train">列車</h3>
+			<div class="train-container"></div>
+			<div class="errors"></div>
+			<div class="buttons">
+				<div class="pngs">
+					<button trans-key="download-png" class="download-button" download-size="small" download-type="png">ダウンロード</button>
+					<button trans-key="download-png" class="download-button" download-size="medium" download-type="png">ダウンロード</button>
+					<button trans-key="download-png" class="download-button" download-size="large" download-type="png">ダウンロード</button>
+				</div>
+				<div class="jpgs">
+					<button trans-key="download-jpg" class="download-button" download-size="small" download-type="jpg">ダウンロード</button>
+					<button trans-key="download-jpg" class="download-button" download-size="medium" download-type="jpg">ダウンロード</button>
+					<button trans-key="download-jpg" class="download-button" download-size="large" download-type="jpg">ダウンロード</button>
+				</div>
+			</div>
+			<h3 trans-key="engine">エンジン</h3>
+			<div class="engines"></div>
+			<h3 trans-key="wagon">ワゴン</h3>
+			<div class="wagons"></div>
+			<h3 trans-key="setting">設定</h3>
+			<div class="settings">
+				<input type="checkbox" id="is_level_visible">
+				<label trans-key="setting-is-level-visible" for="is_level_visible">ワゴンのレベルを表示する</label>
+				<div class="wagon-level-options"></div>
+				<input type="checkbox" id="is_charger_enabled" checked>
+				<label trans-key="setting-is-charger-enabled" for="is_charger_enabled">スーパーチャージワゴンによるレベルアップを反映する</label>
+				<input type="checkbox" id="is_ghost_enabled">
+				<label trans-key="setting-is-ghost-enabled" for="is_ghost_enabled">ゴーストワゴンの効果が及んでいるワゴンを透明にする</label>
+				<input type="checkbox" id="is_only_max_wagon_visible">
+				<label trans-key="setting-is-only-max-wagon-visible" for="is_only_max_wagon_visible">最高レベルのワゴンだけを表示する</label>
+			</div>
+			<h3 trans-key="how-to-use">使い方</h3>
+			<ul class="how-to-use">
+				<li trans-key="how-to-use-1">ワゴンをドラッグ＆ドロップすると、ワゴンを入れ替えることができます。</li>
+				<li trans-key="how-to-use-2">ワゴンの上でマウスホイールを上下すると、レベルを変更できます。</li>
+				<li trans-key="how-to-use-3">メニューのエンジンをクリックすると、列車のエンジンを変更することができます。</li>
+				<li trans-key="how-to-use-4">メニューのワゴンをクリックすると、列車にワゴンを追加することができます。</li>
+			</ul>
+			<h3 trans-key="about">このサイトについて</h3>
+			<ul class="about">
+				<p trans-key="about-content" trans-type="html">Unrailed! Train Makerは、ゲーム『<a href="https://unrailed-game.com/">Unrailed!</a>』の列車の画像を作成してそれをダウンロードすることができる非公式のツールです。ツール作成にあたって<a href="https://unrailed-wiki.com/page/Unrailed!_Wiki">Unrailed! Wiki</a>様の画像を使用しました。</p>
+			</ul>
+			<p class="author">© 2021 <a href="https://twitter.com/GungeeSpla">@GungeeSpla</a></p>
+		</div>
+		<img style="display: none;" src="./assets/img/header/1.jpg">
+	</body>
+</html>

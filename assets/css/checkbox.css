@@ -1,0 +1,58 @@
+/** https://kodocode.net/design-css-checkbox/ */
+/**@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
+
+
+/*Checkboxes styles*/
+input[type="checkbox"] { display: none; }
+
+input[type="checkbox"] + label {
+	display: block;
+	position: relative;
+	padding-left: 1.5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	line-height: 1.2em;
+	font-size: max(12px, min(20px, 3vw));
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.wagon-level-options {
+	display: none;
+	margin-left: 25px;
+}
+.wagon-level-options input[type="checkbox"] + label {
+	display: inline-block;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+input[type="checkbox"] + label:before {
+	content: '';
+	display: block;
+	width: 1em;
+	height: 1em;
+	border: 2px solid #2196f3;
+	position: absolute;
+	left: 0;
+	top: 2px;
+	opacity: .6;
+	-webkit-transition: all .12s, border-color .08s;
+	transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked + label:before {
+	width: 10px;
+	top: -2px;
+	left: 5px;
+	border-radius: 0;
+	opacity: 1;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
