@@ -12,7 +12,6 @@ input[type="checkbox"] + label {
 	margin-top: 1em;
 	margin-bottom: 1em;
 	line-height: 1.2em;
-	font-size: max(12px, min(20px, 3vw));
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -20,13 +19,13 @@ input[type="checkbox"] + label {
 }
 .wagon-level-options {
 	display: none;
-	margin-left: 25px;
+	margin-left: 1.2em;
 }
 .wagon-level-options input[type="checkbox"] + label {
 	display: inline-block;
-	margin-right: 10px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-right: .5em;
+	margin-top: .5em;
+	margin-bottom: .5em;
 }
 
 input[type="checkbox"] + label:last-child { margin-bottom: 0; }
@@ -39,16 +38,16 @@ input[type="checkbox"] + label:before {
 	border: 2px solid #2196f3;
 	position: absolute;
 	left: 0;
-	top: 2px;
+	top: .1em;
 	opacity: .6;
 	-webkit-transition: all .12s, border-color .08s;
 	transition: all .12s, border-color .08s;
 }
 
 input[type="checkbox"]:checked + label:before {
-	width: 10px;
-	top: -2px;
-	left: 5px;
+	width: .5em;
+	top: -.1em;
+	left: .2em;
 	border-radius: 0;
 	opacity: 1;
 	border-top-color: transparent;

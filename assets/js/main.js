@@ -44,20 +44,40 @@
 			en: 'How to Use',
 		},
 		'how-to-use-1': {
-			ja: 'ワゴンをドラッグ＆ドロップすると、ワゴンを入れ替えることができます。',
-			en: 'Drag and drop wagons to swap train wagons.',
+			ja: 'ワゴンを他のワゴンにドラッグ＆ドロップすると、ワゴンを移動させることができます。',
+			en: 'Drag and drop wagons to move train wagons.',
 		},
-		'how-to-use-2': {
+		'how-to-use-1': {
+			ja: 'ワゴンを列車の外にドラッグ＆ドロップすると、ワゴンを削除することができます。',
+			en: 'Drag and drop a wagon outside the train to delete it.',
+		},
+		'how-to-use-3': {
 			ja: 'ワゴンの上でマウスホイールを上下すると、ワゴンのレベルを変更できます。',
 			en: 'Move the wheel up and down on a wagon to change its level.',
 		},
-		'how-to-use-3': {
+		'how-to-use-4': {
 			ja: 'メニューのエンジンをクリックすると、列車のエンジンを変更することができます。',
 			en: 'Click on an engine in the menu to change to that engine.',
 		},
-		'how-to-use-4': {
+		'how-to-use-5': {
 			ja: 'メニューのワゴンをクリックすると、列車にワゴンを追加することができます。',
 			en: 'Click on a wagon in the menu to add that wagon.',
+		},
+		'how-to-use-touch-1': {
+			ja: 'ワゴンをタップして選択してから挿入したい場所をタップすると、ワゴンを移動させることができます。',
+			en: 'Tap a wagon to select it, and then tap the location where you want to insert it to move it.',
+		},
+		'how-to-use-touch-2': {
+			ja: 'ワゴンを上か下にフリックすると、ワゴンを削除できます。',
+			en: 'Flick the wagon up or down to delete it.',
+		},
+		'how-to-use-touch-3': {
+			ja: 'メニューのエンジンをタップすると、列車のエンジンを変更することができます。',
+			en: 'Tap on an engine in the menu to change to that engine.',
+		},
+		'how-to-use-touch-4': {
+			ja: 'メニューのワゴンをタップすると、列車にワゴンを追加することができます。',
+			en: 'Tap on a wagon in the menu to add that wagon.',
 		},
 		'about': {
 			ja: 'このツールについて',
@@ -168,13 +188,15 @@
 			en: 'Show only the highest level wagons.',
 		},
 	};
-	const queries = get_queries();
-	const query_lang_key = queries.lang;
-	const navigator_lang_key = navigator.language || navigator.userLanguage || 'ja';
-	const lang_key =
-		  queries.lang === 'en' ? 'en' :
-		  queries.lang === 'ja' ? 'ja' :
-		  navigator_lang_key.includes('ja') ? 'ja' :
+	const IS_TOUCH_DEVICE  = window.ontouchstart === null;
+	const EVENT_CLICK      = IS_TOUCH_DEVICE ? 'touchstart' : 'click';
+	const QUERIES = get_queries();
+	const QUERY_LANG_KEY = QUERIES.lang;
+	const NAVIGATOR_LANG_KEY = navigator.language || navigator.userLanguage || 'ja';
+	const LANG_KEY =
+		  QUERIES.lang === 'en' ? 'en' :
+		  QUERIES.lang === 'ja' ? 'ja' :
+		  NAVIGATOR_LANG_KEY.includes('ja') ? 'ja' :
 		  'en';
 	let savedata = {
 		'settings': {
@@ -392,73 +414,128 @@
 		img.setAttribute('title', `${get_lang(name)} Lv${level}`);
 		img.classList.add(name);
 		container.append(img);
-		set_insert_event(container, true);
+		set_wagon_event(container, true);
 		document.querySelector('.train-container').prepend(container);
 	}
 
-	/** set_insert_event(wagon, is_wagon)
+	/** set_wagon_event(wagon, is_wagon)
 	 */
-	function set_insert_event(wagon, is_wagon) {
+	function set_wagon_event(wagon, is_wagon) {
 		const img = wagon.querySelector('img');
-		if (is_wagon) {
-			wagon.addEventListener('mousedown', (e) => {
-				const index = parseInt(wagon.getAttribute('wagon-index'));
-				mouse_state.is_down = true;
-				mouse_state.select_wagon_index = index;
-				mouse_state.select_wagon_elm = wagon;
-				mouse_state.select_wagon_img = img;
-				wagon.classList.add('dragging');
-			});
-			wagon.addEventListener('mousewheel', (e) => {
-				e.preventDefault();
-				const name = wagon.getAttribute('wagon-name');
-				const level = parseInt(wagon.getAttribute('wagon-level'));
-				const level_max = parseInt(wagon.getAttribute('wagon-level-max'));
-				let new_level = null;
-				if (e.wheelDelta > 0) {
-					if (level < level_max) {
-						new_level = level + 1;
+		if (IS_TOUCH_DEVICE) {
+			if (is_wagon) {
+				let delete_timer;
+				wagon.addEventListener('touchstart', (e) => {
+					if (mouse_state.is_down) {
+						const train = document.querySelector('.train-container');
+						train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
+							elm.classList.remove('insert');
+							elm.classList.remove('dragging');
+						});
+						train.insertBefore(mouse_state.select_wagon_elm, wagon);
+						mouse_state.is_down = false;
+						update_train();
+					} else {
+						const index = parseInt(wagon.getAttribute('wagon-index'));
+						mouse_state.is_down = true;
+						mouse_state.select_wagon_index = index;
+						mouse_state.select_wagon_elm = wagon;
+						mouse_state.select_wagon_img = img;
+						wagon.classList.add('dragging');
+						const touch = e.changedTouches[0];
+						mouse_state.start_y = touch.pageY;
 					}
-				} else {
-					if (level > 1) {
-						new_level = level - 1;
+					e.stopPropagation();
+				});
+				wagon.addEventListener('touchend', (e) => {
+					clearInterval(delete_timer);
+				});
+				wagon.addEventListener('touchmove', (e) => {
+					const touch = e.changedTouches[0];
+					const move_y = Math.abs(mouse_state.start_y - touch.pageY);
+					if (move_y > wagon.clientHeight) {
+						wagon.remove();
+						mouse_state.is_down = false;
+						update_train();
+					}
+					e.preventDefault();
+				}, { passive: false });
+			} else {
+				wagon.addEventListener('touchstart', (e) => {
+					if (mouse_state.is_down) {
+						const train = document.querySelector('.train-container');
+						train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
+							elm.classList.remove('insert');
+							elm.classList.remove('dragging');
+						});
+						train.insertBefore(mouse_state.select_wagon_elm, wagon);
+						mouse_state.is_down = false;
+						update_train();
+					}
+					e.stopPropagation();
+				});
+			}
+		} else {
+			if (is_wagon) {
+				wagon.addEventListener('mousedown', (e) => {
+					const index = parseInt(wagon.getAttribute('wagon-index'));
+					mouse_state.is_down = true;
+					mouse_state.select_wagon_index = index;
+					mouse_state.select_wagon_elm = wagon;
+					mouse_state.select_wagon_img = img;
+					wagon.classList.add('dragging');
+				});
+				wagon.addEventListener('mousewheel', (e) => {
+					e.preventDefault();
+					const name = wagon.getAttribute('wagon-name');
+					const level = parseInt(wagon.getAttribute('wagon-level'));
+					const level_max = parseInt(wagon.getAttribute('wagon-level-max'));
+					let new_level = null;
+					if (e.wheelDelta > 0) {
+						if (level < level_max) {
+							new_level = level + 1;
+						}
+					} else {
+						if (level > 1) {
+							new_level = level - 1;
+						}
+					}
+					if (new_level) {
+						wagon.setAttribute('wagon-level', new_level);
+						wagon.querySelector('img').setAttribute('src', `./assets/img/wagon/${name}_${new_level}.png`);
+						wagon.querySelector('.level').textContent = new_level;
+						update_train();
+					}
+				}, { passive: false });
+			}
+			wagon.addEventListener('mouseenter', (e) => {
+				if (mouse_state.is_down) {
+					const index = parseInt(wagon.getAttribute('wagon-index'));
+					if (index !== mouse_state.select_wagon_index) {
+						wagon.classList.add('insert');
+					} else {
+						img.src = img.getAttribute('origin-src');
 					}
 				}
-				if (new_level) {
-					wagon.setAttribute('wagon-level', new_level);
-					wagon.querySelector('img').setAttribute('src', `./assets/img/wagon/${name}_${new_level}.png`);
-					wagon.querySelector('.level').textContent = new_level;
+			});
+			wagon.addEventListener('mouseleave', (e) => {
+				if (mouse_state.is_down) {
+					wagon.classList.remove('insert');
+				}
+			});
+			wagon.addEventListener('mouseup', (e) => {
+				if (mouse_state.is_down) {
+					const train = document.querySelector('.train-container');
+					train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
+						elm.classList.remove('insert');
+						elm.classList.remove('dragging');
+					});
+					train.insertBefore(mouse_state.select_wagon_elm, wagon);
+					mouse_state.is_down = false;
 					update_train();
 				}
-			}, { passive: false });
+			});
 		}
-		wagon.addEventListener('mouseenter', (e) => {
-			if (mouse_state.is_down) {
-				const index = parseInt(img.getAttribute('wagon-index'));
-				if (index !== mouse_state.select_wagon_index) {
-					wagon.classList.add('insert');
-				} else {
-					img.src = img.getAttribute('origin-src');
-				}
-			}
-		});
-		wagon.addEventListener('mouseleave', (e) => {
-			if (mouse_state.is_down) {
-				wagon.classList.remove('insert');
-			}
-		});
-		wagon.addEventListener('mouseup', (e) => {
-			if (mouse_state.is_down) {
-				const train = document.querySelector('.train-container');
-				train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
-					elm.classList.remove('insert');
-					elm.classList.remove('dragging');
-				});
-				train.insertBefore(mouse_state.select_wagon_elm, wagon);
-				mouse_state.is_down = false;
-				update_train();
-			}
-		});
 	}
 
 	/** get_now_date_str()
@@ -499,7 +576,7 @@
 	/** get_lang(key)
 	 */
 	function get_lang(key) {
-		return LANG[key] ? LANG[key][lang_key] : '';
+		return LANG[key] ? LANG[key][LANG_KEY] : '';
 	}
 
 	/** trigger(elm, type)
@@ -513,6 +590,11 @@
 	/** init()
 	 */
 	const init = () => {
+		if (IS_TOUCH_DEVICE) {
+			document.body.classList.add('touch-device');
+		} else {
+			document.body.classList.add('mouse-device');
+		}
 		// ======================
 		// 翻訳する
 		// ======================
@@ -610,35 +692,39 @@
 			img.setAttribute('title', '');
 			img.setAttribute('draggable', 'false');
 			container.append(img);
-			set_insert_event(container, false);
+			set_wagon_event(container, false);
 			train.append(container);
-			window.addEventListener('mouseup', (e) => {
-				if (mouse_state.is_down) {
-					mouse_state.is_down = false;
-					mouse_state.select_wagon_elm.remove();
-					train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
-						elm.classList.remove('insert');
-						elm.classList.remove('dragging');
-					});
-					update_train();
-				}
-			});
-			window.addEventListener('mouseleave', (e) => {
-				if (mouse_state.is_down) {
-					mouse_state.is_down = false;
-					train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
-						elm.classList.remove('insert');
-						elm.classList.remove('dragging');
-					});
-					update_train();
-				}
-			});
+			if (IS_TOUCH_DEVICE) {
+				window.addEventListener('touchstart', (e) => {
+					if (mouse_state.is_down) {
+						mouse_state.is_down = false;
+						mouse_state.select_wagon_elm.remove();
+						train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
+							elm.classList.remove('insert');
+							elm.classList.remove('dragging');
+						});
+						update_train();
+					}
+				});
+			} else {
+				window.addEventListener('mouseup', (e) => {
+					if (mouse_state.is_down) {
+						mouse_state.is_down = false;
+						mouse_state.select_wagon_elm.remove();
+						train.querySelectorAll('.wagon-container,.engine-container').forEach((elm) => {
+							elm.classList.remove('insert');
+							elm.classList.remove('dragging');
+						});
+						update_train();
+					}
+				});
+			}
 		}
 		// ======================
 		// ダウンロードできるようにする
 		// ======================
 		document.querySelectorAll('.download-button').forEach((elm) => {
-			elm.addEventListener('click', (e) => {
+			elm.addEventListener(EVENT_CLICK, (e) => {
 				try {
 					const size = elm.getAttribute('download-size');
 					const type = elm.getAttribute('download-type');
@@ -724,7 +810,7 @@
 			img.setAttribute('title', '');
 			img.setAttribute('draggable', 'false');
 			container.append(img);
-			img.addEventListener('click', (e) => {
+			img.addEventListener(EVENT_CLICK, (e) => {
 				document.body.style.setProperty('background-image', `url(./assets/img/header/${j}.jpg)`);
 				document.querySelector('.train-container .engine-container img').setAttribute('src', img.src);
 				document.querySelector('.train-container .engine-container').setAttribute('wagon-count-max', j + 4);
@@ -754,7 +840,7 @@
 				img.setAttribute('title', `${get_lang(name)} Lv${i}`);
 				img.setAttribute('draggable', 'false');
 				container.append(img);
-				container.addEventListener('click', (e) => {
+				container.addEventListener(EVENT_CLICK, (e) => {
 					add_wagon(name, i, count);
 					update_train();
 				});
