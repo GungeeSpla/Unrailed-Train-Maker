@@ -47,7 +47,7 @@
 			ja: 'ワゴンを他のワゴンにドラッグ＆ドロップすると、ワゴンを移動させることができます。',
 			en: 'Drag and drop wagons to move train wagons.',
 		},
-		'how-to-use-1': {
+		'how-to-use-2': {
 			ja: 'ワゴンを列車の外にドラッグ＆ドロップすると、ワゴンを削除することができます。',
 			en: 'Drag and drop a wagon outside the train to delete it.',
 		},
@@ -188,7 +188,7 @@
 			en: 'Show only the highest level wagons.',
 		},
 	};
-	const IS_TOUCH_DEVICE  = window.ontouchstart === null;
+	const IS_TOUCH_DEVICE  = window.ontouchstart !== undefined;
 	const EVENT_CLICK      = IS_TOUCH_DEVICE ? 'touchstart' : 'click';
 	const QUERIES = get_queries();
 	const QUERY_LANG_KEY = QUERIES.lang;
