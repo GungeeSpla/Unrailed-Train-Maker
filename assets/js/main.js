@@ -84,7 +84,7 @@
 			en: 'About',
 		},
 		'about-content': {
-			ja: '<a href="https://gungeespla.github.io/Unrailed-Train-Maker/">Unrailed! Train Maker</a>は、ゲーム『<a href="https://unrailed-game.com/">Unrailed!</a>』の列車の画像を作ることができる非公式のツールです。ツール作成にあたって<a href="https://unrailed-wiki.com/page/Unrailed!_Wiki">Unrailed! Wiki</a>様の画像を使用しました。',
+			ja: '<a href="https://gungeespla.github.io/Unrailed-Train-Maker/">Unrailed! Train Maker</a>は、ゲーム『<a href="https://unrailed-game.com/">Unrailed!</a>』の列車の画像を作れる非公式のツールです。ツール作成にあたって<a href="https://unrailed-wiki.com/page/Unrailed!_Wiki">Unrailed! Wiki</a>様の画像を使用しました。',
 			en: '<a href="https://gungeespla.github.io/Unrailed-Train-Maker/">Unrailed! Train Maker</a> is the unofficial online software for creating images of <a href="https://unrailed-game.com/">Unrailed!</a> trains. This site uses images from the <a href="https://unrailed-wiki.com/page/Unrailed!_Wiki">Unrailed! Wiki</a>.',
 		},
 		'download-png': {
