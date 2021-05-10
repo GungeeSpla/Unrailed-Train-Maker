@@ -856,6 +856,7 @@
 	 */
 	function onload() {
 		document.body.style.setProperty('background-image', 'url(./assets/img/header/1.jpg)');
+		alert(('ontouchstart' in window || navigator.msPointerEnabled) ? true : false);
 	}
 
 	/** window.addEventListener
