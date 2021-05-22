@@ -9,15 +9,19 @@
 		<meta name="twitter:title" content="Unrailed! Train Maker" />
 		<meta name="twitter:description" content="ゲーム『Unrailed!』の列車の画像を作れる非公式のツールです。" />
 		<meta name="twitter:image" content="https://gungeespla.github.io/Unrailed-Train-Maker/assets/img/favicon.png" />
-		<script src="./assets/js/main.js?ver=1.0e"></script>
-		<link href="./assets/css/reset.css?ver=1.0e" rel="stylesheet">
-		<link href="./assets/css/checkbox.css?ver=1.0e" rel="stylesheet">
-		<link href="./assets/css/style.css?ver=1.0e" rel="stylesheet">
+		<script src="./assets/js/main.js?ver=1.0f"></script>
+		<link href="./assets/css/reset.css?ver=1.0f" rel="stylesheet">
+		<link href="./assets/css/checkbox.css?ver=1.0f" rel="stylesheet">
+		<link href="./assets/css/style.css?ver=1.0f" rel="stylesheet">
 		<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	</head>
 	<body>
 		<h2 trans-key="title">Unrailed! 列車メーカー</h2>
 		<div id="content">
+			<h3 trans-key="engine">エンジン</h3>
+			<div class="engines"></div>
+			<h3 trans-key="wagon">ワゴン</h3>
+			<div class="wagons"></div>
 			<h3 trans-key="train">列車</h3>
 			<div class="train-container"></div>
 			<div class="errors"></div>
@@ -33,10 +37,6 @@
 					<button trans-key="download-jpg" class="download-button" download-size="large" download-type="jpg">ダウンロード</button>
 				</div>
 			</div>
-			<h3 trans-key="engine">エンジン</h3>
-			<div class="engines"></div>
-			<h3 trans-key="wagon">ワゴン</h3>
-			<div class="wagons"></div>
 			<h3 trans-key="setting">設定</h3>
 			<div class="settings">
 				<input type="checkbox" id="is_level_visible">

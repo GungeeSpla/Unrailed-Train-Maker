@@ -675,12 +675,13 @@
 		// ======================
 		{
 			const train = document.querySelector('.train-container');
+			const level = (savedata.settings.is_only_max_wagon_visible) ? 3 : 1;
 			[
-				'TankWagon',
-				'StorageWagon',
 				'CraftingWagon',
+				'StorageWagon',
+				'TankWagon',
 			].forEach((wagon) => {
-				add_wagon(wagon, 1, 3);
+				add_wagon(wagon, level, 3);
 			});
 			// エンジン
 			const container = document.createElement('div');

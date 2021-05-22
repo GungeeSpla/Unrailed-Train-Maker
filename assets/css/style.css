@@ -1,7 +1,7 @@
 /** html
  */
 html {
-	font-size: max(12px, min(20px, 3vw));
+	font-size: max(12px, min(18px, 3vw));
 	line-height: 150%;
 	color: #444;
 }
@@ -117,7 +117,7 @@ h3:after {
  */
 .buttons {
 	text-align: center;
-	margin: 1em 0;
+	margin: 2em 0;
 }
 	/** .download-button
 	 * @see https://grow-group.jp/archives/2674/
@@ -290,8 +290,8 @@ h3:after {
 	height: 6.66vw;
 	min-width: 35px;
 	min-height: 30px;
-	max-width: 120px;
-	max-height: 100px;
+	max-width: 110px;
+	max-height: 90px;
 	object-fit: cover;
 	cursor: pointer;
 }
@@ -306,8 +306,8 @@ h3:after {
 	height: 6.66vw;
 	min-width: 30px;
 	min-height: 35px;
-	max-width: 90px;
-	max-height: 105px;
+	max-width: 80px;
+	max-height: 95px;
 	object-fit: cover;
 	cursor: pointer;
 }
