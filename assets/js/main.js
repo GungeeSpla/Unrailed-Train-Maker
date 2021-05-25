@@ -15,6 +15,7 @@
 		['BrakeWagon', 3],
 		['GhostWagon', 3],
 		['BuckinatorWagon', 3],
+		['MilkWagon', 3],
 		['MinerWagon', 3],
 		['TransformerWagon', 3],
 		['SlotMachineWagon', 3],
@@ -138,6 +139,10 @@
 		'GhostWagon': {
 			ja: 'ゴーストワゴン',
 			en: 'Ghost Wagon',
+		},
+		'MilkWagon': {
+			ja: 'ミルクワゴン',
+			en: 'Milk Wagon',
 		},
 		'LightWagon': {
 			ja: '照明ワゴン',
