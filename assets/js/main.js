@@ -1,9 +1,6 @@
 (() => {
-	
+
 	/** 定数定義 */
-	const wagonAULT_ROW_SIZE = 50;    // デフォルトのフィールドのヨコの広さ
-	const wagonAULT_COLUMN_SIZE = 20; // デフォルトのフィールドのタテの広さ
-	const wagonAULT_LANG_KEY = 'ja';  // デフォルトの言語キー
 	const ENGINE_COUNT = 7;
 	const WAGON_DEFINE = [
 		['CraftingWagon', 3],
@@ -561,7 +558,7 @@
 		  + ('00' + s).slice(-2);
 		return str;
 	}
-	
+
 	/** get_queries(url)
 	 */
 	function get_queries(url) {
@@ -794,7 +791,7 @@
 					}
 					link.download = `Train-${get_now_date_str()}.${type}`;
 					link.click();
-					
+
 				} catch (e) {
 					console.error(e);
 					alert(get_lang('error-download'));
